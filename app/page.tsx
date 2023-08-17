@@ -1,3 +1,5 @@
+'use client'
+
 import {v4 as uuid} from 'uuid'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -11,10 +13,23 @@ import CardComponent from './(shared)/Card'
 import getCountries from './libs/getCountries'
 import Link from 'next/link'
 import getCountry from './libs/getCountry'
+import RegionDropdown from './(shared)/RegionDropdown'
+import { useEffect, useState } from 'react'
+import Countries from './(shared)/Countries'
 
 
-export default async function Home() {
-  const countries = await getCountries()
+export default function Home() {
+  const [countries, setCountries] = useState([])
+
+  useEffect(() => {
+    const getCountries = async () => {
+      const res = await fetch('/api')
+      const countries = await res.json()
+      setCountries(countries)
+    }
+
+    getCountries()
+  }, [])
 
 
   return (
@@ -26,35 +41,11 @@ export default async function Home() {
           <Input placeholder='Search for a country...' className='basis-1/3 dark:bg-primary-700 bg-primary-100' />
 
           {/*REGION DROPDOWN  */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant='secondary' className='border'>Filter by Region</Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className='bg-secondary'>
-              <DropdownMenuItem>Asia</DropdownMenuItem>
-              <DropdownMenuItem>Americas</DropdownMenuItem>
-              <DropdownMenuItem>Africa</DropdownMenuItem>
-              <DropdownMenuItem>Europe</DropdownMenuItem>
-              <DropdownMenuItem>Oceania</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <RegionDropdown />
         </div>
 
         {/* COUNTRIES */}
-        <div className='md:grid grid-flow-row gap-4 grid-cols-4 lg:grid-cols-6'>
-          {countries.map((country: any) => (
-              // eslint-disable-next-line react/jsx-key
-              <Link href={`countries/${encodeURIComponent(country.name.official)}`}>
-                <CardComponent
-                  flagImgUrl={country.flags.svg}
-                  capital={country.capital[0]}
-                  name={country.name.common}
-                  population={country.population}
-                  region={country.region}
-                />
-              </Link>
-          ))}
-    </div>
+        <Countries countries={countries}/>
       </div>
     </main>
   )
