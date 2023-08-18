@@ -1,19 +1,21 @@
 'use client'
 
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { useState } from "react"
 
 type Props = {
-    getSearchResults: () => void
+    getSearchResults: (value: any[]) => void
 }
 
 export default function SearchCoins({ getSearchResults }: Props) {
    const [query, setQuery] = useState('')
 
-   const handleSubmit = async (e) => {
+   const handleSubmit = async (e: any) => {
     e.preventDefault()
 
-    const response = await fetch(`/api/coins/search?query=${query}`)
+    const response = await fetch(`/api/search?query=${query}`)
 
     const country = await response.json()
 
@@ -22,11 +24,9 @@ export default function SearchCoins({ getSearchResults }: Props) {
    }
 
   return (
-    <div className="text-center my-20">
-        <form onSubmit={handleSubmit}>
-            <input className="text-black border-2 border-black rounded-full px-3 py-2" type="text" placeholder="Search coin..." value={query} onChange={(e) => setQuery(e.target.value)} />
-            <button className="bg-black text-white rounded-full px-3 py-2 hover:bg-black/60" type="submit">Search</button>
-        </form>
-    </div>
+      <form onSubmit={handleSubmit} className="flex">
+          <Input placeholder='Search for a country...' className='dark:bg-primary-700 bg-primary-100' value={query} onChange={e => setQuery(e.target.value)} />
+          <Button variant='secondary' className='border' type="submit">Search</Button>
+      </form>
   )
 }

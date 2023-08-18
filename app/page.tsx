@@ -16,6 +16,7 @@ import getCountry from './libs/getCountry'
 import RegionDropdown from './(shared)/RegionDropdown'
 import { useEffect, useState } from 'react'
 import Countries from './(shared)/Countries'
+import SearchCountry from './(shared)/SearchCountry'
 
 
 export default function Home() {
@@ -38,7 +39,8 @@ export default function Home() {
         {/* INPUT AND DROPDOWN */}
         <div className='md:flex justify-between mb-5'>
           {/* SEARCH BAR */}
-          <Input placeholder='Search for a country...' className='basis-1/3 dark:bg-primary-700 bg-primary-100' />
+          {/* <Input placeholder='Search for a country...' className='basis-1/3 dark:bg-primary-700 bg-primary-100' /> */}
+          <SearchCountry getSearchResults={(value: string[]) => setCountries(value)} />
 
           {/*REGION DROPDOWN  */}
           <RegionDropdown />
