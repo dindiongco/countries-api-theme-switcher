@@ -21,7 +21,7 @@ type Props = {
 const CardComponent = ({name, capital, population, region, flagImgUrl}: Props) => {
   return (
     <>
-        <Card className='mb-4 max-w-[200px] h-[375px]'>
+        <Card className='mb-4 max-w-[300px] h-[375px]'>
             
             <CardHeader>
                 <Image 

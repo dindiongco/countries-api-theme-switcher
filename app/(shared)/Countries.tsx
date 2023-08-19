@@ -8,10 +8,9 @@ type Props = {
 
 const Countries = ({countries}: Props) => {
   return (
-    <div className='md:grid grid-flow-row gap-4 grid-cols-4 lg:grid-cols-6'>
+    <div className='grid grid-flow-row gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6'>
         {countries.map((country: any) => (
-            // eslint-disable-next-line react/jsx-key
-            <Link href={`countries/${encodeURIComponent(country.name.official)}`}>
+            <Link href={`countries/${encodeURIComponent(country.name.official)}`} key={country.name.official}>
             <CardComponent
                 flagImgUrl={country.flags.svg}
                 capital={country.capital[0]}

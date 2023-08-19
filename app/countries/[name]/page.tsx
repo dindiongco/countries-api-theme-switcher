@@ -34,14 +34,16 @@ const CountryPage = async ({params}: Props) => {
         </div>
         <div>
           {country.map((details: any) => (
-            // eslint-disable-next-line react/jsx-key
             <Details
+              key={details.name.common}
               capital={details.capital[0]}
               name={details.name.common}
               population={details.population}
               subRegion={details.subregion}
               region={details.region}
-              topLevelDomain={details.tld[0]}
+              topLevelDomain={details.tld.map((detail:any) => (
+                <>{detail}</>
+              ))}
             />
           ))}
         </div>
